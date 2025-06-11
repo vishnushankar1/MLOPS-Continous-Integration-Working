@@ -11,5 +11,5 @@ fifth_power=n**5
 
 #display results
 st.write(f"the square of {n} is: {square}")
-st.write(f"the cube of {n} is: {cube}")
+st.write(f"the cube of { n} is: {cube}")
 st.write(f"the fifth power of {n} is: {fifth_power}")

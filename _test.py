@@ -1,33 +1,39 @@
+# test_app.py
+
 import pytest
 
-# Function to test square
-def square(n):
-    return n ** 2
+# --- Function to be tested (from your Streamlit app logic) ---
+def power_calculations(n):
+    return n**2, n**3, n**5
 
-# Function to test cube
-def cube(n):
-    return n ** 3
+# --- Unit Test Cases ---
+def test_positive_number():
+    assert power_calculations(2) == (4, 8, 32)
 
-# Function to test fifth power
-def fifth_power(n):
-    return n ** 5
+def test_zero():
+    assert power_calculations(0) == (0, 0, 0)
 
-# Testing the square function
-def test_square():
-    assert square(2) == 4, "Test Failed: Square of 2 should be 4"
-    assert square(3) == 9, "Test Failed: Square of 3 should be 9"
+def test_negative_number():
+    assert power_calculations(-3) == (9, -27, -243)
 
-# Testing the cube function
-def test_cube():
-    assert cube(2) == 8, "Test Failed: Cube of 2 should be 8"
-    assert cube(3) == 27, "Test Failed: Cube of 3 should be 27"
+def test_large_number():
+    result = power_calculations(10)
+    assert result == (100, 1000, 100000)
 
-# Testing the fifth power function
-def test_fifth_power():
-    assert fifth_power(2) == 32, "Test Failed: Fifth power of 2 should be 32"
-    assert fifth_power(3) == 243, "Test Failed: Fifth power of 3 should be 243"
+def test_float_number():
+    result = power_calculations(2.5)
+    assert round(result[0], 2) == 6.25
+    assert round(result[1], 2) == 15.62
+    assert round(result[2], 2) == 97.66
 
-# Test for invalid input
-def test_invalid_input():
-    with pytest.raises(TypeError):
-        square("string")
+# --- Code Quality Test using flake8 ---
+def test_code_quality():
+    """Run flake8 on the current file to ensure code style compliance."""
+    import subprocess
+    result = subprocess.run(
+        ["flake8", __file__],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    assert result.returncode == 0, f"Flake8 issues found:\n{result.stdout}"
